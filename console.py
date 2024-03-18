@@ -114,47 +114,43 @@ class HBNBCommand(cmd.Cmd):
         pass
 
 
-    def do_create(self, args):
-    """Create an object of any class"""
-    if not args:
+    def do_create(self, arg):
+    """Create a neinstance of a class"""
+    if not arg:
         print("** class name missing **")
         return
 
-    tokens = args.split()
-    cmd = {}
+    args = arg.split()
 
-    if len(tokens) < 2:
-        print("** parameter missing **")
+    ClssName = args[0]
+    if ClssName not in self.classes:
+        print("** class doesn't exist **")
         return
 
-    if tokens[1] is None:
-        print("** parameter missing **")
-        return
+    kwargs = {}
+    for param in args[1:]:
+        KyVal = param.split('=')
+        if len(KyVal) != 2:
+            continue
+        key, value = KyVal
+        value = value.replace('_', ' ')
 
-    if len(tokens) >= 2:
-        if tokens[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        elif tokens[0] in HBNBCommand.classes:
-            params = tokens[1].split("=")
-            if len(params) % 2 != 0:
-                print("** invalid parameter **")
-                return
-            for i in range(0, len(params), 2):
-                key = params[i]
-                value = params[i+1]
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1].replace("_", " ").replace('\\"', '"')
-                elif '.' in value:
-                    value = float(value)
-                else:
-                    value = int(value)
-                cmd[key] = value
+        if value.startswith('"') and value.endswith('"'):
+            value = value[1:-1].replace('\\"', '"')
 
-    new_instance = HBNBCommand.classes[args](**cmd)
-    storage.save()
-    print(new_instance.id)
-    storage.save()
+        try:
+            value = int(value)
+        except ValueError:
+            try:
+                value = float(value)
+            except ValueError:
+                pass
+
+        kwargs[key] = value
+
+    instance = self.classes[ClssName](**kwargs)
+    instance.save()
+    print(instance.id)
 
     def help_create(self):
         """ Help information for the create method """
