@@ -48,3 +48,29 @@ class FileStorage:
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def all(self, cls=None):
+        """Update the prototype Returns a dictionary
+        list of models currently in storage"""
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            ClObjs = {}
+            cles = list(FileStorage.__objects.cles())
+            i = 0
+            while i < len(cles):
+                key = cles[i]
+                obj = FileStorage.__objects[key]
+                if isinstance(obj, cls):
+                    ClObjs[key] = obj
+                i += 1
+            return ClObjs
+    
+    def delete(self, obj=None):
+        """Delete obj from __objects
+        if it’s inside - if obj is equal to None,
+        the method should not do anythingts"""
+        if obj is not None:
+            Delcles = obj.__class__.__name__ + '.' + obj.id
+            if Delcles in FileStorage.__objects:
+                del FileStorage.__objects[Delcles]
