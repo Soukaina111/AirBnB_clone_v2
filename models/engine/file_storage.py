@@ -72,4 +72,3 @@ class FileStorage:
 
         if to_delete is not None:
             del objects[to_delete]
-
