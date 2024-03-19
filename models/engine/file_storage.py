@@ -15,16 +15,13 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self, cls=None):
-        """Returns a dictionary or list of objects of one type of class."""
+     def all(self, cls=None):
+        """Returns a dictionary of models currently in storage."""
         obje = FileStorage.__objects
-
         if cls is None:
             return obje
-
         target_cln = cls.__name__
-        fobj = [val for val in obje.values() if isinstance(val, cls)]
-
+        fobj = {k: val for k, val in obje.items() if target_cln in k}
         return fobj
 
     def new(self, obj):
