@@ -17,14 +17,11 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage."""
-        objects = FileStorage.__objects
-
+        obje = FileStorage.__objects
         if cls is None:
-            return objects
-
+            return obje
         target_cln = cls.__name__
-        fobj = {k: val for k, val in objects.items() if target_cln in k}
-
+        fobj = {k: val for k, val in obje.items() if target_cln in k}
         return fobj
 
     def new(self, obj):
