@@ -126,45 +126,55 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         storage.save()"""
 
-    def do_create(self, args):
-    """Create an object of any class"""
-    if not args:
-        print("** class name missing **")
-        return
-    tokens = args.split()
-    cmd = {}
-
-    if len(tokens) < 2:
-        print("** parameter missing **")
-        return
-
-    if tokens[1] is None:
-        print("** parameter missing **")
-        return
-
-    if len(tokens) >= 2:
-        if tokens[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
+    def create_instance(self, arg):
+        """Crée une instance d'une classe"""
+        if not arg:
+            print("** Nom de classe manquant **")
             return
-        elif tokens[0] in HBNBCommand.classes:
-            params = tokens[1].split("=")
-            if len(params) % 2 != 0:
-                print("** invalid parameter **")
-                return
-            for i in range(0, len(params), 2):
-                key = params[i]
-                value = params[i+1]
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1].replace("_", " ").replace('\\"', '"')
-                elif '.' in value:
-                    value = float(value)
-                else:
-                    value = int(value)
-                cmd[key] = value
 
-    new_instance = HBNBCommand.classes[args](**cmd)
-    storage.save()
-    print(new_instance.id)
+        inargs = arg.split()
+        NmClasse = inargs[0]
+        if NmClasse not in MonAssistant.classes:
+            print("** La classe n'existe pas **")
+            return
+
+        nouvlInst = MonAssistant.classes[NmClasse]()
+
+        i = 1
+        while i < len(inargs):
+            itm = inargs[i]
+            cleVal = itm.split('=')
+            if len(cleVal) != 2:
+                print(f"Paramètre invalide : {itm}. Ignoré.")
+                i += 1
+                continue
+
+            cle, valr = cleVal
+            # Gestion des valeurs de chaîne de caractères
+            if valr.startswith('"') and valr.endswith('"'):
+                valr = valr[1:-1].replace('\"', '"').replace('_', ' ')
+            # Gestion des valeurs flottantes
+            elif '.' in valr:
+                try:
+                    valr = float(valr)
+                except ValueError:
+                    print(f"Valeur de paramètre invalide : {itm}. Ignorée.")
+                    i += 1
+                    continue
+            # Gestion des valeurs entières
+            else:
+                try:
+                    valr = int(valr)
+                except ValueError:
+                    print(f"Valeur de paramètre invalide : {itm}. Ignorée.")
+                    i += 1
+                    continue
+
+            setattr(nouvlInst, cle, valr)
+            i += 1
+
+        nouvlInst.save()
+        print(nouvlInst.id)
 
     def help_create(self):
         """ Help information for the create method """
