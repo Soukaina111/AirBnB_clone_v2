@@ -8,9 +8,23 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self):
-        """Returns a dictionary of models currently in storage"""
-        return FileStorage.__objects
+    def all(self, cls=None):
+        """Update the prototype
+        Returns a dictionary
+        list of models currently in storage"""
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            ClObjs = {}
+            keys = list(FileStorage.__objects.keys())
+            i = 0
+            while i < len(keys):
+                ky = keys[i]
+                fobj = FileStorage.__objects[ky]
+                if isinstance(fobj, cls):
+                    ClObjs[ky] = fobj
+                i += 1
+            return ClObjs
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -45,26 +59,9 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
-
-    def all(self, cls=None):
-        """Update the prototype Returns a dictionary
-        list of models currently in storage"""
-        if cls is None:
-            return FileStorage.__objects
-        else:
-            ClObjs = {}
-            cles = list(FileStorage.__objects.cles())
-            i = 0
-            while i < len(cles):
-                key = cles[i]
-                obj = FileStorage.__objects[key]
-                if isinstance(obj, cls):
-                    ClObjs[key] = obj
-                i += 1
-            return ClObjs
 
     def delete(self, obj=None):
         """Delete obj from __objects
