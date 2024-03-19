@@ -65,7 +65,7 @@ class FileStorage:
                     ClObjs[key] = obj
                 i += 1
             return ClObjs
-    
+
     def delete(self, obj=None):
         """Delete obj from __objects
         if it’s inside - if obj is equal to None,
