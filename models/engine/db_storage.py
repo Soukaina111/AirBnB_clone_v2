@@ -18,8 +18,8 @@ class DBStorage:
     __engine = None
     __session = None
 
-   def __init__(self):
-       """ Initializes DBStorage variables """
+    def __init__(self):
+        """ Initializes DBStorage variables """
         user_name = os.getenv("HBNB_MYSQL_USER")
         password = os.getenv("HBNB_MYSQL_PWD")
         host = os.getenv("HBNB_MYSQL_HOST")
@@ -65,13 +65,13 @@ class DBStorage:
 
     def delete(self, obj=None):
         """This method removes an obj is not None"""
-        if obj!= None:
+        if obj is not None:
             self.__session.delete(obj)
 
-     def reload(self):
-        """ This method Creates all tables in the database awith its session's db """
+    def reload(self):
+        """ This method Creates all
+        tables in the database awith its session's db """
         Base.metadata.create_all(self.__engine)
         factory_se = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(factory_se)
         self.__session = Session()
-

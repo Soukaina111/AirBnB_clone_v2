@@ -19,8 +19,10 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             '''
-            Returns a list of City instances with state_id equal to the current State.id.
+            Returns a list of City instances with
+            state_id = the current State.id.
             '''
 
             c_dict = models.storage.all(City)
-            return [city for city in c_dict.values() if city.state_id == self.id]
+            return [city for city in c_dict.values()
+                    if city.state_id == self.id]
