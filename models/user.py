@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 import os
 from sqlalchemy.orm import relationship
-
+from models.place import Place
 
 class User(BaseModel, Base):
     """ This class defines a user
