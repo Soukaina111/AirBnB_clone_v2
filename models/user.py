@@ -5,7 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 import os
 from sqlalchemy.orm import relationship
-from models.place import Place
+
 
 class User(BaseModel, Base):
     """ This class defines a user
@@ -17,4 +17,4 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
-    places = relationship('Place', cascade='all, delete', backref='user', passive_deletes=True)
+    places = relationship('Place', cascade='all, delete', backref='user')
