@@ -4,6 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 import os
+from sqlalchemy.orm import relationship
+
 
 class User(BaseModel, Base):
     """ This class defines a user
