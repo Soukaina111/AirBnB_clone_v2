@@ -2,8 +2,6 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
-import os
-from models import storage
 
 
 class Place(BaseModel, Base):
@@ -22,21 +20,7 @@ class Place(BaseModel, Base):
 
     __tablename__ = 'places'
     
-    type_storage = os.getenv("HBNB_TYPE_STORAGE")
-
-    if type_storage == "db":
-        reviews = relationship('Review', cascade='all, delete', backref='place', passive_deletes=True)
-    else:
-        @property
-        def reviews(self):
-            """ This is a getter attribute for reviews module """
-            list_r = []
-            for rev in storage.all("Review").values():
-                if rev.place_id == self.id:
-                    list_r.append(rev)
-            return list_r
-
-
+    
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
