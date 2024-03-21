@@ -5,4 +5,3 @@ from sqlalchemy import Column, String
 
 
 class Review(BaseModel):
-    """ Review classto store review information """
