@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ This module defines a class User"""
 from models.base_model import BaseModel, Base
-from models.review import Review
 from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 import os
