@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module instantiates an object of class FileStorage"""
 import os
+from models.review import Review
 
 
 env_var = os.getenv('HBNB_TYPE_STORAGE')
