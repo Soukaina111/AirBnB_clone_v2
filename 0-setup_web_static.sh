@@ -13,8 +13,9 @@ sudo mkdir -p /data/web_static/shared/
 echo "<html><body><h1>Hello, Souka</h1></body></html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
 sudo rm -f /data/web_static/current
-sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-
+if [ ! -e /etc/nginx/sites-enabled/hbnb_static ]; then
+            sudo ln -s /data/web_static/releases/test/ /data/web_static/current
+fi
 sudo chown -R ubuntu:ubuntu /data/
 
 echo "server {
