@@ -30,4 +30,3 @@ echo "server {
 sudo ln -s /etc/nginx/sites-available/hbnb_static /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 
-echo " Nginx is configured to serve content from /data/web_static/current/ at https://easypath.tech/hbnb_static"
