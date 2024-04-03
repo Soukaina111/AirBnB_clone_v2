@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# This script prepares the web servers for deployement
+# This shell  script prepares the web servers for deployement
 if ! command -v nginx &> /dev/null
 then
     sudo apt-get update
