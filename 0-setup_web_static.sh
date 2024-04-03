@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This shell  script prepares the web servers for deployement
 if ! command -v nginx &> /dev/null
 then
