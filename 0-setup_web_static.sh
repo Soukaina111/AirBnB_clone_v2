@@ -1,34 +1,20 @@
 #!/usr/bin/env bash
-# This shell  script prepares the web servers for deployement
-if ! command -v nginx &> /dev/null
-then
-            sudo apt-get update
-                sudo apt-get install -y nginx
-fi
+# This  script prepares the web servers for deplpoyement
 
-sudo mkdir -p /data/web_static/releases/test/
+sudo apt update
+sudo apt install -y nginx
 sudo mkdir -p /data/web_static/shared/
-
-echo "<html><body><h1>Hello, Souka</h1></body></html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
-
-sudo rm -f /data/web_static/current
-if [ ! -e /etc/nginx/sites-enabled/hbnb_static ]; then
-            sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-fi
-# sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-
+sudo mkdir -p /data/web_static/releases/test/
+sudo touch /data/web_static/releases/test/index.html
+sudo rm /data/web_static/current
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
-
-echo "server {
-    listen 80;
-        server_name easypath.tech;
-
-            location /hbnb_static/ {
-                    alias /data/web_static/current/;
-                            try_files \$uri \$uri/ =404;
-                                }
-                }" | sudo tee /etc/nginx/sites-available/hbnb_static > /dev/null
-
-        sudo ln -s /etc/nginx/sites-available/hbnb_static /etc/nginx/sites-enabled/
-        sudo systemctl restart nginx
-
+echo "<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>" > /data/web_static/releases/test/index.html
+sudo sed -i "s/server_name _;/&\n\n\tlocation \/hbnb_static {\n\t\talias \/data\/web_static\/current;\n\t\tindex index.html;\n\t}\n/" /etc/nginx/sites-enabled/default
+sudo service nginx restart
