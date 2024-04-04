@@ -21,7 +21,7 @@ def do_deploy(archive_path):
     name = file_name.split(".")[0]
     tmp_path = f"/tmp/{file_name}"
     release_path = f"/data/web_static/releases/{name}/"
-    return False
+        return False
     if run(f"rm -rf {release_path}").failed:
         return False
     if run(f"mkdir -p {release_path}").failed:
