@@ -75,3 +75,8 @@ class DBStorage:
         factory_se = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(factory_se)
         self.__session = Session()
+
+
+    def close(self):
+        """Dispose of current session if active"""
+        self.__session.remove()

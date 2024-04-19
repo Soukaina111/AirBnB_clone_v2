@@ -71,3 +71,8 @@ class FileStorage:
             Delcles = obj.__class__.__name__ + '.' + obj.id
             if Delcles in FileStorage.__objects:
                 del FileStorage.__objects[Delcles]
+
+
+    def close(self):
+        """ Deserialization of JSON file"""
+        self.reload()
