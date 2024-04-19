@@ -32,7 +32,7 @@ class State(BaseModel, Base):
                 return [city for city in c_dict.values()
                         if city.state_id == self.id]
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
             """ this method returns City objects """
