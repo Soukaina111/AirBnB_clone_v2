@@ -72,7 +72,6 @@ class FileStorage:
             if Delcles in FileStorage.__objects:
                 del FileStorage.__objects[Delcles]
 
-
     def close(self):
         """ Deserialization of JSON file"""
         self.reload()

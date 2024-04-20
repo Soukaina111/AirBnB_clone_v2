@@ -11,6 +11,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from models.user import User
 from models.amenity import Amenity
 
+
 class DBStorage:
     '''
     This class handles the db engine
@@ -76,7 +77,6 @@ class DBStorage:
         Session = scoped_session(factory_se)
         self.__session = Session()
 
-
     def close(self):
-        """Dispose of current session if active"""
+        """ in case of active session it deletes"""
         self.__session.remove()

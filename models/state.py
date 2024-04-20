@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
 import models
@@ -19,7 +19,11 @@ class State(BaseModel, Base):
         super().__init__(*args, **kwargs)
         self.name = kwargs.get('name', '')
         if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-            self.cities = relationship('City', cascade='all, delete', backref='state')
+            self.cities = relationship(
+                    'City',
+                    cascade='all, delete',
+                    backref='state'
+                                )
         else:
             @property
             def cities(self):
@@ -35,7 +39,7 @@ class State(BaseModel, Base):
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
-            """ this method returns City objects """
+            """ this method returns City instances """
             cit = models.storage.all("City").values()
             cities = []
             for c in cit:
