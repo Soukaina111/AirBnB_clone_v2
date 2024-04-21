@@ -4,7 +4,7 @@ le's get started with  FlasK
 """
 
 from flask import Flask, render_template
-from models import *
+from models import storage
 
 
 app = Flask(__name__)
@@ -13,15 +13,14 @@ app = Flask(__name__)
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """ Shows sorted cities and states """
-    states = models.storage.all("State").values()
+    states = storage.all("State").values()
     return render_template('8-cities_by_states.html', states=states)
-
 
 
 @app.teardown_appcontext
 def teardown_db(exception):
     """closes the storage on teardown"""
-   models. storage.close()
+    storage.close()
 
 
 if __name__ == '__main__':
